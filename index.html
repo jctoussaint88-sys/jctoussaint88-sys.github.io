@@ -11,16 +11,14 @@
       height: 100vh;
     }
   </style>
+  <!-- Script pour recharger toute la page toutes les 60 secondes -->
+  <script>
+    setTimeout(function() {
+      location.reload();
+    }, 60000); // 60 000 ms = 60 secondes
+  </script>
 </head>
 <body>
   <iframe id="sheetFrame" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRxAtHZ6znRXbiggzfYs4hPXGwl4UURmc-HIKDTRc2m1AsUccPF5cZ8Y-xXbTWpgrCRoq1rStx6ZBPc/pubhtml?gid=220114643&single=true"></iframe>
-  <script>
-    const interval = 60000; // 60 secondes en ms
-    const iframe = document.getElementById('sheetFrame');
-    const sheetUrl = iframe.src;
-    setInterval(() => {
-      iframe.src = sheetUrl + (sheetUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
-    }, interval);
-  </script>
 </body>
 </html>
