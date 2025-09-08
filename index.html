@@ -21,16 +21,16 @@
   <iframe 
     id="sheetFrame" 
     title="Feuille Google Sheets"
-    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRxAtHZ6znRXbiggzfYs4hPXGwl4UURmc-HIKDTRc2m1AsUccPF5cZ8Y-xXbTWpgrCRoq1rStx6ZBPc/pubhtml?gid=220114643&single=true">
+    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRxAtHZ6znRXbiggzfYs4hPXGwl4UURmc-HIKDTRc2m1AsUccPF5cZ8Y-xXbTWpgrCRoq1rStx6ZBPc/pubhtml?widget=true&headers=false">
   </iframe>
 
   <script>
-    const baseUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRxAtHZ6znRXbiggzfYs4hPXGwl4UURmc-HIKDTRc2m1AsUccPF5cZ8Y-xXbTWpgrCRoq1rStx6ZBPc/pubhtml?gid=220114643&single=true";
+    const baseUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRxAtHZ6znRXbiggzfYs4hPXGwl4UURmc-HIKDTRc2m1AsUccPF5cZ8Y-xXbTWpgrCRoq1rStx6ZBPc/pubhtml?widget=true&headers=false";
 
     setInterval(function() {
       const frame = document.getElementById("sheetFrame");
       frame.src = baseUrl + "&t=" + new Date().getTime(); // empêche le cache
-    }, 300000); // toutes les 300 secondes
+    }, 300000);
   </script>
 </body>
 </html>
