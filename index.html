@@ -1,36 +1,84 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Feuille Google Sheets Actualisée</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Feuille Google Sheets (scale fix)</title>
   <style>
-    body {
+    :root { --scale: 0.85; } /* valeur initiale (85%) - ajuste si besoin */
+
+    html,body {
+      height: 100%;
       margin: 0;
-      padding: 0;
       background: #f9f9f9;
+      font-family: Arial, sans-serif;
     }
+
+    /* panneau de contrôle (slider) */
+    .controls {
+      position: fixed;
+      right: 12px;
+      top: 12px;
+      z-index: 9999;
+      background: rgba(255,255,255,0.92);
+      padding: 8px 10px;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      font-size: 13px;
+    }
+    .controls label { display:block; margin-bottom:6px; }
+    .controls input[type="range"] { width:160px; }
+
+    /* wrapper qui compense le scale */
+    .iframe-wrapper {
+      /* utilise la variable --scale (nombre sans unité, ex: 0.85) */
+      width: calc(100vw / var(--scale));
+      height: calc(100vh / var(--scale));
+      transform: scale(var(--scale));
+      transform-origin: top left;
+      overflow: hidden;
+    }
+
     iframe {
-      border: none;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
     }
   </style>
 </head>
 <body>
-  <iframe 
-    id="sheetFrame" 
-    title="Feuille Google Sheets"
-    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRxAtHZ6znRXbiggzfYs4hPXGwl4UURmc-HIKDTRc2m1AsUccPF5cZ8Y-xXbTWpgrCRoq1rStx6ZBPc/pubhtml?widget=true&headers=false">
-  </iframe>
+
+  <div class="controls" title="Ajuste le 'zoom' visuel de l'iframe">
+    <label>Zoom affichage : <strong id="pct">85%</strong></label>
+    <input id="slider" type="range" min="50" max="120" value="85" />
+  </div>
+
+  <div class="iframe-wrapper">
+    <iframe id="sheetFrame"
+      src="SRC_PUBHTML">
+    </iframe>
+  </div>
 
   <script>
-    const baseUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRxAtHZ6znRXbiggzfYs4hPXGwl4UURmc-HIKDTRc2m1AsUccPF5cZ8Y-xXbTWpgrCRoq1rStx6ZBPc/pubhtml?widget=true&headers=false";
+    const slider = document.getElementById('slider');
+    const pct = document.getElementById('pct');
 
-    setInterval(function() {
-      const frame = document.getElementById("sheetFrame");
-      frame.src = baseUrl + "&t=" + new Date().getTime(); // empêche le cache
-    }, 300000); // rafraîchit toutes les 5 minutes
+    function setScale(pctValue){
+      const s = (pctValue/100).toString();
+      document.documentElement.style.setProperty('--scale', s);
+      pct.textContent = pctValue + '%';
+    }
+
+    slider.addEventListener('input', (e) => setScale(e.target.value));
+    setScale(slider.value);
+
+    // si tu veux garder la logique de refresh auto (touche ton URL si besoin)
+    const baseUrl = "SRC_PUBHTML"; // laisse tel quel ou adapte
+    setInterval(() => {
+      const f = document.getElementById('sheetFrame');
+      f.src = baseUrl + (baseUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
+    }, 300000); // 5 min
   </script>
 </body>
 </html>
