@@ -2,23 +2,35 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feuille Google Sheets Actualisée</title>
   <style>
-    body { margin: 0; padding: 0; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+    }
     iframe {
       border: none;
       width: 100vw;
       height: 100vh;
     }
   </style>
-  <!-- Script pour recharger toute la page toutes les 60 secondes -->
-  <script>
-    setTimeout(function() {
-      location.reload();
-    }, 60000); // 60 000 ms = 60 secondes
-  </script>
 </head>
 <body>
-  <iframe id="sheetFrame" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRxAtHZ6znRXbiggzfYs4hPXGwl4UURmc-HIKDTRc2m1AsUccPF5cZ8Y-xXbTWpgrCRoq1rStx6ZBPc/pubhtml?gid=220114643&single=true"></iframe>
+  <iframe 
+    id="sheetFrame" 
+    title="Feuille Google Sheets"
+    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRxAtHZ6znRXbiggzfYs4hPXGwl4UURmc-HIKDTRc2m1AsUccPF5cZ8Y-xXbTWpgrCRoq1rStx6ZBPc/pubhtml?gid=220114643&single=true">
+  </iframe>
+
+  <script>
+    const baseUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRxAtHZ6znRXbiggzfYs4hPXGwl4UURmc-HIKDTRc2m1AsUccPF5cZ8Y-xXbTWpgrCRoq1rStx6ZBPc/pubhtml?gid=220114643&single=true";
+
+    setInterval(function() {
+      const frame = document.getElementById("sheetFrame");
+      frame.src = baseUrl + "&t=" + new Date().getTime(); // empêche le cache
+    }, 300000); // toutes les 300 secondes
+  </script>
 </body>
 </html>
